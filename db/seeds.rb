@@ -1,9 +1,12 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+puts "Bắt đầu seed dữ liệu từ VietnamWorks..."
+
+begin
+  raw_jobs = VietnamworksCrawler.new.crawl(pages: 2)
+  result   = JobImporter.call(raw_jobs)
+
+  puts "Seed hoàn tất. #{result.summary}"
+  puts "Tổng số job trong database: #{Job.count}"
+rescue => e
+  puts "Seed thất bại: #{e.message}"
+  puts "Có thể do mất mạng hoặc API VietnamWorks thay đổi."
+end
