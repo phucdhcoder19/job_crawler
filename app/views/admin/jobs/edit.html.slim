@@ -1,0 +1,43 @@
+- content_for :title, "Edit: #{@job.title}"
+
+h1 Edit job
+
+= form_with model: [:admin, @job], class: "job-form" do |form|
+  - if @job.errors.any?
+    .form-errors
+      h2 = "#{pluralize(@job.errors.count, "error")} prevented this job from being saved:"
+      ul
+        - @job.errors.full_messages.each do |message|
+          li = message
+
+  .job-form__field
+    = form.label :title
+    = form.text_field :title
+
+  .job-form__field
+    = form.label :company_name, "Company"
+    = form.text_field :company_name
+
+  .job-form__field
+    = form.label :salary
+    = form.text_field :salary
+
+  .job-form__field
+    = form.label :location
+    = form.text_field :location
+
+  .job-form__field
+    = form.label :job_url, "Job URL"
+    = form.url_field :job_url
+
+  .job-form__field
+    = form.label :posted_at, "Posted at"
+    = form.datetime_field :posted_at
+
+  .job-form__field
+    = form.label :description
+    = form.text_area :description, rows: 8
+
+  .job-form__actions
+    = form.submit "Save", class: "button"
+    = link_to "Cancel", admin_jobs_path, class: "link-back"

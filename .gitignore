@@ -33,3 +33,7 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+
+# dartsass-rails build output
+/app/assets/builds/*
+!/app/assets/builds/.keep

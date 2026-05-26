@@ -1,0 +1,34 @@
+- content_for :title, @job.title
+
+article.job-detail
+  header
+    h1.job-detail__title = @job.title
+    p.job-detail__company = @job.company_name.presence || "Unknown company"
+
+  dl.job-detail__meta
+    div
+      dt Location
+      dd = @job.location.presence || "Not specified"
+    div
+      dt Salary
+      dd = @job.salary.presence || "Not specified"
+    div
+      dt Posted
+      dd = @job.posted_at&.strftime("%B %d, %Y") || "Not specified"
+    div
+      dt Source
+      dd = @job.source
+
+  section.job-detail__description
+    h2 Description
+    - if @job.description.present?
+      = simple_format(@job.description)
+    - else
+      p.empty-state No description provided.
+
+  .job-detail__actions
+    - if @job.job_url.present?
+      = link_to "View original posting", @job.job_url,
+        class: "button", target: "_blank", rel: "noopener"
+
+    = link_to "← Back to all jobs", jobs_path, class: "link-back"

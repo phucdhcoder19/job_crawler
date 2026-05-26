@@ -4,6 +4,10 @@ source "https://rubygems.org"
 gem "rails", "~> 8.1.3"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
+# Render views with the Slim template language [https://github.com/slim-template/slim-rails]
+gem "slim-rails"
+# Compile SCSS to CSS with Dart Sass (Propshaft-compatible) [https://github.com/rails/dartsass-rails]
+gem "dartsass-rails"
 # Use mysql as the database for Active Record
 gem "mysql2", "~> 0.5"
 # Use the Puma web server [https://github.com/puma/puma]
@@ -65,6 +69,8 @@ gem "selenium-webdriver"
 gem "sidekiq", "~> 7.2"
 gem "sidekiq-cron", "~> 1.12"
 gem "redis", "~> 5.0"
+gem "connection_pool", "~> 2.5"
+gem "kaminari"
 group :development, :test do
   gem "dotenv-rails"
 end

@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title = content_for(:title) || "Job Crawler"
+    meta name="viewport" content="width=device-width,initial-scale=1"
+
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = yield :head
+
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_importmap_tags
+
+  body
+    header.site-header
+      .container
+        = link_to "Job Crawler", root_path, class: "site-header__brand"
+        = link_to "Admin", admin_jobs_path, class: "site-header__brand"
+    main.container
+      - if flash.any?
+        .flash
+          - flash.each do |type, message|
+            .flash__item class="flash__item--#{type}" = message
+      = yield

@@ -1,0 +1,104 @@
+@use "variables" as *;
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  overflow: hidden;
+
+  th,
+  td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid $color-border;
+  }
+
+  th {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: $color-muted;
+    background: $color-bg;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  &__actions {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  &__link {
+    font-size: 0.9rem;
+
+    & + & { margin-left: 0.75rem; }
+
+    &--danger {
+      color: $color-danger;
+
+      &:hover { color: $color-danger-dark; }
+    }
+  }
+}
+
+.job-form {
+  max-width: 640px;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    label {
+      margin-bottom: 0.25rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 0.5rem 0.6rem;
+      font: inherit;
+      border: 1px solid $color-border;
+      border-radius: $radius;
+      background: $color-surface;
+
+      &:focus {
+        outline: none;
+        border-color: $color-primary;
+      }
+    }
+
+    textarea { resize: vertical; }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+}
+
+.form-errors {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  color: $color-danger-dark;
+  background: $color-danger-bg;
+  border: 1px solid $color-danger-border;
+  border-radius: $radius;
+
+  h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+}

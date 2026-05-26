@@ -1,0 +1,40 @@
+h1 Job listings
+= form_with url: jobs_path, method: :get, class: "search-form" do |form|
+  .search-form__field
+    = form.label :q, "Search by title"
+    = form.text_field :q, value: params[:q], placeholder: "e.g. Ruby developer"
+
+  .search-form__field
+    = form.label :location, "Location"
+    = form.select :location,
+      options_for_select(@locations, params[:location]),
+      { include_blank: "All locations" }
+
+  = form.submit "Search", class: "search-form__submit"
+
+- if @jobs.any?
+  p.results-count Found <strong>#{@jobs.total_count}</strong> jobs
+  .jobs
+    - @jobs.each do |job|
+      article.job-card
+        h2.job-card__title
+          = link_to highlight_search_terms(job.title, params[:q]), job_path(job)
+        p.job-card__company = job.company_name.presence || "Unknown company"
+
+        ul.job-card__meta
+          li
+            span.label Location:
+            = job.location.presence || "—"
+          li
+            span.label Salary:
+            = job.salary.presence || "Not specified"
+          li
+            span.label Posted:
+            = job.posted_at&.strftime("%b %d, %Y") || "Not specified"
+
+        - if job.source.present?
+          p.job-card__source = "via #{job.source}"
+
+  = paginate @jobs
+- else
+  p.empty-state No jobs found. Try a different keyword or location.

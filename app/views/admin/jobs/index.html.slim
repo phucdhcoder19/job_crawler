@@ -1,0 +1,53 @@
+/ app/views/admin/jobs/index.html.slim
+/ Admin job list: a searchable/filterable table with Edit + Delete per row.
+
+h1 Manage jobs
+
+/ Reuse the public .search-form styling for a consistent look. GET form, so the
+/ query/filter live in the URL and survive reloads (same pattern as the public list).
+= form_with url: admin_jobs_path, method: :get, class: "search-form" do |form|
+  .search-form__field
+    = form.label :q, "Search by title"
+    / value: params[:q] re-fills the box so the search term persists after submit.
+    = form.text_field :q, value: params[:q], placeholder: "e.g. Ruby developer"
+
+  .search-form__field
+    = form.label :location, "Location"
+    / options_for_select's 2nd arg re-selects the current location after submit.
+    = form.select :location,
+      options_for_select(@locations, params[:location]),
+      { include_blank: "All locations" }
+
+  = form.submit "Search", class: "search-form__submit"
+
+- if @jobs.any?
+  p.results-count Found #{@jobs.total_count} jobs
+
+  table.admin-table
+    thead
+      tr
+        th Title
+        th Company
+        th Location
+        th Posted
+        th.admin-table__actions Actions
+    tbody
+      - @jobs.each do |job|
+        tr
+          td = job.title
+          / Nil-safe placeholders for optional columns.
+          td = job.company_name.presence || "—"
+          td = job.location.presence || "—"
+          td = job.posted_at&.strftime("%b %d, %Y") || "—"
+          td.admin-table__actions
+            = link_to "Edit", edit_admin_job_path(job), class: "admin-table__link"
+            / Turbo turns this link into a DELETE request and shows a confirm
+            / dialog first — no separate <form> needed (Rails 7+ / Turbo).
+            = link_to "Delete", admin_job_path(job),
+              class: "admin-table__link admin-table__link--danger",
+              data: { turbo_method: :delete,
+                      turbo_confirm: "Delete \"#{job.title}\"? This cannot be undone." }
+
+  = paginate @jobs
+- else
+  p.empty-state No jobs found. Try a different keyword or location.
