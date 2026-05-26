@@ -1,0 +1,54 @@
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7
+    volumes:
+      - redis_data:/data
+
+  web:
+    build: .
+    command: bash -c "bin/rails db:prepare && bin/rails server -b 0.0.0.0"
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: password
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - .:/app
+
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: password
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - .:/app
+
+volumes:
+  mysql_data:
+  redis_data:
