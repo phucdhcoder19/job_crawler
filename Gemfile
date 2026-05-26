@@ -62,7 +62,9 @@ end
 gem "httparty"
 gem "nokogiri"
 gem "selenium-webdriver"
-
+gem "sidekiq", "~> 7.2"
+gem "sidekiq-cron", "~> 1.12"
+gem "redis", "~> 5.0"
 group :development, :test do
   gem "dotenv-rails"
 end

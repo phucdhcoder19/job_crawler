@@ -1,0 +1,5 @@
+crawl_vietnamworks_daily:
+  cron: "0 2 * * *"
+  class: "CrawlJobsJob"
+  queue: default
+  description: "Crawl việc làm từ VietnamWorks mỗi ngày lúc 2h sáng"
