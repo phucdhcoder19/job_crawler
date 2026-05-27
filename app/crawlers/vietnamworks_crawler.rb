@@ -5,7 +5,7 @@ class VietnamworksCrawler
     "html" => Vietnamworks::HtmlStrategy
   }.freeze
 
-  def initialize(strategy: ENV.fetch("CRAWLER_STRATEGY", "api"))
+  def initialize(strategy: ENV.fetch("CRAWLER_STRATEGY", "html"))
     klass = STRATEGIES.fetch(strategy) do
       raise ArgumentError, "Strategy is not valid #{strategy}"
     end

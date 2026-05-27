@@ -4,8 +4,8 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.5;
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
   color: $color-text;
   background: $color-bg;
 }
@@ -21,27 +21,45 @@ a {
   width: 100%;
   max-width: $max-width;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.25rem;
 }
 
 .site-header {
   background: $color-surface;
   border-bottom: 1px solid $color-border;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: saturate(120%) blur(6px);
 
   &__brand {
     display: inline-block;
-    padding: 1rem 0;
-    font-size: 1.25rem;
-    font-weight: 700;
+    padding: 0.85rem 0.95rem;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
     color: $color-text;
+    border-radius: $radius-sm;
+    transition: background 180ms ease, color 180ms ease;
 
     &:hover { text-decoration: none; }
   }
 }
 
+.site-header .container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.site-header__brand:hover,
+.site-header__brand:focus-visible {
+  background: $color-surface-muted;
+}
+
 main.container {
   padding-top: 1.5rem;
-  padding-bottom: 3rem;
+  padding-bottom: 3.5rem;
 }
 
 .flash {

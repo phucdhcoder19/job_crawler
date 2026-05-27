@@ -71,6 +71,8 @@ gem "sidekiq-cron", "~> 1.12"
 gem "redis", "~> 5.0"
 gem "connection_pool", "~> 2.5"
 gem "kaminari"
+gem "elasticsearch-model", "~> 7.2"
+gem "elasticsearch-rails", "~> 7.2"
 group :development, :test do
   gem "dotenv-rails"
 end
